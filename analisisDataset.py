@@ -7,25 +7,25 @@ df=pd.read_csv('twitter_covid_labelled_mickey.csv')
 df_filtrado = df[df['label'] != 'U']
 
 # Se aplica la funcion de limpieza y se tokeniza cada tweet creando la columna 'tokenized_content'
-df['tokenized_content'] = df['content'].apply(lambda x: cleanAndtokenize(x))
+df_filtrado['tokenized_content'] = df_filtrado['content'].apply(lambda x: cleanAndtokenize(x))
 
 print("================== PALABRAS MAS USADAS POR VERACIDAD ==================")
-palabras_mas_frecuentes_por_label(df,10,'tokenized_content')
+palabras_mas_frecuentes_por_label(df_filtrado,10,'tokenized_content')
 
 # Se eliminan las stopwords
-df=remove_stopwords_from_column(df)
+df_filtrado=remove_stopwords_from_column(df_filtrado)
 
 print("================== PALABRAS MAS USADAS POR VERACIDAD (SIN STOPWORDS) ==================")
-palabras_mas_frecuentes_por_label(df,10,'tokenized_content')
+palabras_mas_frecuentes_por_label(df_filtrado,10,'tokenized_content')
 
 print("=================================PALABRAS MAS USADAS POR VERACIDAD Y UNICAS POR LABEL====================================")
-df['words_unique_label'] = get_unique_words_by_label(df)
-palabras_mas_frecuentes_por_label(df,20,'words_unique_label')
+df_filtrado['words_unique_label'] = get_unique_words_by_label(df_filtrado)
+palabras_mas_frecuentes_por_label(df_filtrado,20,'words_unique_label')
 
 
 
 print("=================================PONDERACION TOKENS====================================")
-result = calculate_non_zero_tfidf(df)  
+result = calculate_non_zero_tfidf(df_filtrado)  
 result=filter_tfidf_by_threshold(result,0.60,0.80)
 
 crear_tabla_tf_idf(result,30)

@@ -40,12 +40,12 @@ def palabras_mas_frecuentes_por_label(df, n, column_name):
     table = ax.table(cellText=df_resultados.values,
                      colLabels=df_resultados.columns,
                      cellLoc='center', loc='center',
-                     colColours=['blue'] * len(df_resultados.columns))  
+                     colColours=[(0.8, 0.8, 1.0)] * len(df_resultados.columns))  
 
     # Estilo para el header
     for key, cell in table.get_celld().items():
         if key[0] == 0:
-            cell.set_text_props(fontweight='bold', color='white')
+            cell.set_text_props(fontweight='bold', color='black')
 
     plt.show()
 
