@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, auc, roc_curve
+import pandas as pd
 
 def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
 
@@ -11,16 +12,17 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     param_grid = {
         'criterion': ['gini', 'entropy'],
         'splitter': ['best', 'random'],
-        'max_depth': [None, 1, 2, 3],
-        'min_samples_split': [2, 5],
-        'min_samples_leaf': [1, 2]
+        'max_depth': [ 1, 3, 5],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 5],
+        'max_features': ['sqrt']  
     }
     
     # NO CV
     
     # Entrenamiento del modelo
     dt_classifier.fit(X_train, y_train)
-
+    
     # Predicciones en el conjunto de prueba 
     y_pred_test_no_cv = dt_classifier.predict(X_test)
     
@@ -34,6 +36,14 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print(confusion_mat_test_no_cv)
     print('\nClassification Report en conjunto de prueba sin CV:')
     print(classification_rep_test_no_cv)
+    
+    # Obtención de la importancia de las características
+    feature_importances = dt_classifier.feature_importances_
+    feature_names = X_train.columns
+    feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': feature_importances})
+    feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
+    print('\nImportancia de las características:')
+    print(feature_importance_df)
     
     # Curva ROC 
     plt.figure()
@@ -124,7 +134,3 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     plt.close()
 
     return dt_classifier
-
-
-
-

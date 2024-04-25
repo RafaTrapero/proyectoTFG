@@ -1,16 +1,14 @@
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report,auc,roc_curve
-
-
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, auc, roc_curve
+import pandas as pd
 
 def random_forest_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
 
     model = RandomForestClassifier(random_state=42)
     
-    # Prámetros para la hiperparametrización
+    # Parámetros para la hiperparametrización
     param_grid = {
         'n_estimators': [2, 5, 10],
         'max_depth': [2, 5, 10],
@@ -35,6 +33,14 @@ def random_forest_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print(confusion_mat_test_no_cv)
     print('\nClassification Report en conjunto de prueba sin CV:')
     print(classification_rep_test_no_cv)
+    
+    # Obtención de la importancia de las características
+    feature_importances = model.feature_importances_
+    feature_names = X_train.columns
+    feature_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': feature_importances})
+    feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
+    print('\nImportancia de las características:')
+    print(feature_importance_df)
     
     # Curva ROC
     plt.figure()

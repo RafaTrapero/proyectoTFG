@@ -179,3 +179,36 @@ def filter_tfidf_by_threshold(tfidf_dict, lower_threshold, upper_threshold):
             filtered_tfidf[word] = tfidf
 
     return filtered_tfidf
+
+def grafica_barras(csv_path):
+
+    df = pd.read_csv(csv_path)
+    
+
+    conteo_por_label = df['label'].value_counts()
+    
+
+    plt.bar(conteo_por_label.index, conteo_por_label.values)
+    plt.xlabel('Label')
+    plt.ylabel('Cantidad de Filas')
+    plt.title('Cantidad de Filas por Label')
+    plt.show()
+    
+def grafica_value_porcentaje(csv_path):
+    # Leer el CSV
+    df = pd.read_csv(csv_path)
+    
+    # Contar la cantidad de filas con valor '#VALUE!' en la columna 'sentiment'
+    total_filas = len(df)
+    filas_con_value = df[df['sentiment'] == '#VALUE!']
+    num_filas_con_value = len(filas_con_value)
+    
+    # Calcular el porcentaje
+    porcentaje_value = (num_filas_con_value / total_filas) * 100
+    
+    # Graficar
+    plt.bar(['#VALUE!', 'Resto'], [porcentaje_value, 100 - porcentaje_value])
+    plt.xlabel('Valor')
+    plt.ylabel('Porcentaje de Filas')
+    plt.title('Porcentaje de Filas con Valor "#VALUE!"')
+    plt.show()    

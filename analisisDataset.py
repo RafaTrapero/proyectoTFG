@@ -1,5 +1,5 @@
 import pandas as pd
-from utils.utils import crear_tabla_tf_idf, palabras_mas_frecuentes_por_label,calculate_non_zero_tfidf, cleanAndtokenize, filter_tfidf_by_threshold, get_unique_words_by_label, remove_stopwords_from_column
+from utils.utils import crear_tabla_tf_idf, grafica_barras, grafica_value_porcentaje, palabras_mas_frecuentes_por_label,calculate_non_zero_tfidf, cleanAndtokenize, filter_tfidf_by_threshold, get_unique_words_by_label, remove_stopwords_from_column
 
 df=pd.read_csv('twitter_covid_labelled_mickey.csv')
 
@@ -29,3 +29,9 @@ result = calculate_non_zero_tfidf(df_filtrado)
 result=filter_tfidf_by_threshold(result,0.60,0.80)
 
 crear_tabla_tf_idf(result,30)
+
+# Gráfica de barras para observar la distribución de los tweets por label
+grafica_barras('twitter_covid_labelled_mickey.csv')
+
+# Distribución valores nulos en la columna 'sentiment'
+grafica_value_porcentaje('twitter_covid_labelled_mickey.csv')

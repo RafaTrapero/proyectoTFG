@@ -2,10 +2,11 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, auc
 import matplotlib.pyplot as plt
+import numpy as np
 
 def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
 
-    model = MLPClassifier(random_state=42, max_iter=1000)  # Ajusta los parámetros según tus necesidades
+    model = MLPClassifier(random_state=42, max_iter=200)  # Ajusta los parámetros según tus necesidades
 
     # Parámetros para la hiperparametrización
     param_grid = {
@@ -32,6 +33,9 @@ def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print(confusion_mat_test_no_cv)
     print('\nClassification Report en conjunto de prueba sin CV:')
     print(classification_rep_test_no_cv)
+
+    # Obtención de los nombres de las características
+    feature_names = X_train.columns.tolist()
 
     # Curva ROC
     plt.figure()
@@ -111,5 +115,14 @@ def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     plt.legend(loc="lower right")
     plt.savefig('roc_curve_neural_network.jpg')
     plt.close()
+
+    # Obtención de la importancia de las características
+    importances = best_model_cv2.coefs_[0]
+    feature_importances = np.abs(importances).mean(axis=0)
+
+    # Impresión de las características más importantes
+    print("\nImportancia de las características:")
+    for i in np.argsort(feature_importances)[::-1][:10]:
+        print(f"{feature_names[i]}: {feature_importances[i]}")
 
     return model, best_model_cv1, best_model_cv2

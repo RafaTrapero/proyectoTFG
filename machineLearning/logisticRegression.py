@@ -1,17 +1,23 @@
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_predict,StratifiedKFold
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
 from sklearn.metrics import roc_curve, auc, accuracy_score, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
-
+import pandas as pd
 
 def logistic_regression_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
 
-    model = LogisticRegression(random_state=42, C=0.1, class_weight='balanced')
-    
+    model = LogisticRegression(random_state=42, C=0.1, class_weight='balanced')    
     # SIN CV
     
     # Entrenamiento del modelo
     model.fit(X_train, y_train)
+
+    # Obtener los coeficientes y los nombres de las variables
+    coef_names = pd.DataFrame({'Feature': X_train.columns, 'Coefficient': model.coef_[0]})
+    coef_names = coef_names.sort_values(by='Coefficient', ascending=False)
+    
+    print("Coeficientes del modelo con mayor relevancia:")
+    print(coef_names)
 
     # Predicciones en el conjunto de prueba
     y_pred_test_no_cv = model.predict(X_test)
