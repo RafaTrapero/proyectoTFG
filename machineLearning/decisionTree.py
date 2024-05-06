@@ -12,7 +12,7 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     param_grid = {
         'criterion': ['gini', 'entropy'],
         'splitter': ['best', 'random'],
-        'max_depth': [ 1, 3, 5],
+        'max_depth': [1, 3, 5],
         'min_samples_split': [2, 5, 10],
         'min_samples_leaf': [1, 2, 5],
         'max_features': ['sqrt']  
@@ -83,6 +83,9 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print('\nClassification Report en validación cruzada en conjunto de entrenamiento:')
     print(classification_rep_cv1)
     
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv1
+    print("\nMejores hiperparámetros del modelo con CV1:")
+    print(best_dt_model_cv1.get_params())
     
     # Curva ROC 
     y_prob_test_cv1 = best_dt_model_cv1.predict_proba(X_test)[:, 1]
@@ -114,6 +117,9 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print('\nClassification Report en validación cruzada en conjunto de entrenamiento:')
     print(classification_rep_cv2)
 
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv2
+    print("\nMejores hiperparámetros del modelo con CV2:")
+    print(best_dt_model_cv2.get_params())
     
     # Curva ROC 
     y_prob_test_cv2 = best_dt_model_cv2.predict_proba(X_test)[:, 1]

@@ -56,6 +56,10 @@ def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     # Obtención del mejor modelo (gracias a la hiperparametrización)
     best_model_cv1 = grid_search_cv1.best_estimator_
 
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv1
+    print("\nMejores hiperparámetros del modelo con CV1:")
+    print(best_model_cv1.get_params())
+
     # Predicciones en conjunto de prueba
     y_pred_test_cv1 = best_model_cv1.predict(X_test)
 
@@ -99,6 +103,10 @@ def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print(confusion_mat_test_cv2)
     print('\nClassification Report en conjunto de prueba con CV:')
     print(classification_rep_test_cv2)
+    
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv2
+    print("\nMejores hiperparámetros del modelo con CV2:")
+    print(best_model_cv2.get_params())
 
     # Curva ROC
     y_prob_test_cv2 = best_model_cv2.predict_proba(X_test)[:, 1]

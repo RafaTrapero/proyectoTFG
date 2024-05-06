@@ -74,6 +74,10 @@ def random_forest_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print('\nClassification Report en conjunto de prueba con CV:')
     print(classification_rep_test_cv1)
     
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv1
+    print("\nMejores hiperparámetros del modelo con CV1:")
+    print(best_model_cv1.get_params())
+    
     # Curva ROC
     y_prob_test_cv1 = best_model_cv1.predict_proba(X_test)[:, 1]
     fpr_cv1, tpr_cv1, _ = roc_curve(y_test, y_prob_test_cv1)
@@ -103,6 +107,10 @@ def random_forest_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     print('\nClassification Report en conjunto de prueba con CV:')
     print(classification_rep_test_cv2)
 
+    # Imprimir los valores de los hiperparámetros del mejor modelo obtenido con cv2
+    print("\nMejores hiperparámetros del modelo con CV2:")
+    print(best_model_cv2.get_params())
+    
     # Curva ROC
     y_prob_test_cv2 = best_model_cv2.predict_proba(X_test)[:, 1]
     fpr_cv2, tpr_cv2, _ = roc_curve(y_test, y_prob_test_cv2)
