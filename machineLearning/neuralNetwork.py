@@ -6,8 +6,7 @@ import numpy as np
 
 def neural_network_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
 
-    model = MLPClassifier(random_state=42, max_iter=200)  # Ajusta los parámetros según tus necesidades
-
+    model = MLPClassifier(random_state=42, max_iter=200)  
     # Parámetros para la hiperparametrización
     param_grid = {
         'hidden_layer_sizes': [(50,), (100,), (50, 50)],

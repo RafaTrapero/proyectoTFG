@@ -65,7 +65,7 @@ def decision_tree_tuning_cv(X_train, y_train, X_test, y_test, cv1, cv2):
     best_dt_model_cv1 = grid_search.best_estimator_
 
     """
-    En este caso, el uso de X_test en el método .predict() tiene sentido, ya que estás evaluando el rendimiento del modelo seleccionado 
+    En este caso, el uso de X_test en el método .predict() tiene sentido, ya que está evaluando el rendimiento del modelo seleccionado 
     (el mejor modelo obtenido después de la hiperparametrización) en un conjunto de datos independiente, es decir, en datos que el modelo 
     no ha visto durante el entrenamiento o la validación cruzada.
     """
